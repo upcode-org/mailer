@@ -1,0 +1,35 @@
+{
+  "name": "generic-mailer",
+  "version": "1.0.0",
+  "description": "Mailer for upCode web services.",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "npm run server",
+    "server": "nodemon dist/src/server.js",
+    "compile": "tsc -w",
+    "test": "mocha -r ts-node/register --exit 'src/**/*.spec.ts'"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Sebastian Vega",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.2",
+    "mongodb": "^3.0.2",
+    "nodemailer": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.5.7",
+    "@types/chai": "^4.1.3",
+    "@types/mocha": "^5.2.2",
+    "@types/mongodb": "^3.0.5",
+    "@types/node": "^9.4.5",
+    "@types/nodemailer": "^4.6.0",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "ts-node": "^6.1.1",
+    "typescript": "^2.9.1"
+  }
+}

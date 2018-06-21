@@ -1,0 +1,13 @@
+{ 
+    "compileOnSave": true,  
+    "compilerOptions": {         
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "baseUrl": ".",
+      "target": "ES6",                     
+      "outDir": "./dist",         
+      "sourceMap": true    
+    },     
+    "include": [ "src/**/*" ],     
+    "exclude": [ "node_modules"] 
+}
