@@ -1,6 +1,6 @@
 import { Message } from "amqplib";
 
-export interface IVerificationMailer {
+export interface IVerificationEmailConsumer {
     sendUserVerification(userVerificationPayload: UserVerificationPayload): Promise<boolean>;
 }
 

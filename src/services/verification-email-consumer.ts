@@ -1,12 +1,13 @@
 import { ArchivingService } from './archiving-service';
-import { IVerificationMailer, UserVerificationPayload } from './service-contracts/verification-mailer-contracts';
+import { IVerificationEmailConsumer, UserVerificationPayload } from './service-contracts/verification-email-consumer-contracts';
 import { Db } from 'mongodb';
 import { UnableToSendMail } from './service-contracts/error-definitions';
 import { MailOptions } from 'nodemailer/lib/stream-transport';
 import { Transporter } from 'nodemailer';
 import { Connection, Channel, Message } from 'amqplib';
+import { rabbitConnection, rabbitChannel } from '../data/rabbitMQ';
 
-export class VerificationMailer implements IVerificationMailer {
+export class VerificationEmailConsumer implements IVerificationEmailConsumer {
 
     q = 'verification-emails';
     identityProviderHost = 'localhost:3088'; // dev vs prod
@@ -18,50 +19,68 @@ export class VerificationMailer implements IVerificationMailer {
     mailerDb: Db;
     archivingService: ArchivingService;
 
-    constructor(mailerDb, archivingService, transporter, connection) {
+    constructor(mailerDb, archivingService, transporter) {
         this.mailerDb = mailerDb;
         this.archivingService = archivingService;
         this.transporter = transporter;
-        this.connection = connection;
-    }
 
-    async init(): Promise<void> {
-        this.ch = await this.connection.createChannel();
-        await this.ch.assertQueue(this.q);
-        this.ch.prefetch(10);
-        this.ch.consume(this.q, this.onMessage.bind(this));
         this.transporter.on('idle', this.flushWaitingMessagesCaller.bind(this));
     }
 
-    onMessage(msg: Message) {
-        console.log('FROM RMQ')
+    async connect(): Promise<void> {
+        try {
+            this.connection = await rabbitConnection();
+            this.ch = await rabbitChannel(this.connection);
+            await this.ch.checkQueue(this.q);
+            console.log('connected to RabbitMQ');
+        } catch(err) {
+            console.log('could not connect to RabbitMQ');
+            throw err;
+        }
+        this.connection.on('close', this.connect.bind(this));
+        this.init();
+    }
+
+    init(): void {
+        this.ch.prefetch(10);
+
+        try {
+            this.ch.consume(this.q, this.onMessage.bind(this));
+            console.log('consuming from ' + this.q + ' queue' );
+        } catch(err) { 
+            console.log('consumer error: ', err);
+        }
+    }
+
+    onMessage(msg: Message): Promise<boolean|string> {
+        console.log('GOT A MESSAGE FROM RMQ');
         if (msg !== null) {
             this.waiting.push(msg);
             return this.flushWaitingMessages();
         }
-        return null;
     }
 
-    flushWaitingMessagesCaller(){
-        console.log('on idle called me!');
+    flushWaitingMessagesCaller(): void {
+        console.log('Transporter can send!');
         this.flushWaitingMessages();
     }
 
-    flushWaitingMessages() {
+    flushWaitingMessages(): Promise<boolean|string> {
 
-        const send = (msg: Message): void => {
+        const send = (msg: Message): Promise<boolean|string> => {
             let userVerificationPayload;
 
             try {
                 userVerificationPayload = new UserVerificationPayload(msg);
             } catch(err) {
-                //report err
-                //console.log('reject malformed msg');
-                return this.ch.reject(msg, false);
+                console.log('rejected malformed msg');
+                if (this.ch) this.ch.reject(msg, false);
+                return Promise.resolve(false);
             }
 
             var mailOptions: MailOptions = {
-                from: 'no-reply@upcode.co',
+                from: 'admin@upcode.co',
+                replyTo: 'mailer@upcode.co',
                 to: userVerificationPayload.email,
                 subject: 'Verify your upcode account',
                 html: `
@@ -70,29 +89,30 @@ export class VerificationMailer implements IVerificationMailer {
                 `
             };
 
-            this.transporter.sendMail(mailOptions, (err, info) => {
-                if (err) {
+            return this.transporter.sendMail(mailOptions)
+                .then( info => {
+                    console.log('==+++=====+SENT+=====+++==', info.response );
+                    if(this.ch) this.ch.ack(msg);
+                    return info.response;
+                })
+                .catch( err => {
                     setTimeout(() => {
-                        //console.log('could not send message, rejected to avoid infinite loop');
-                        this.ch.reject(msg, false);
+                        console.log('could not send message, rejected to avoid infinite loop', err);
+                        if(this.ch) this.ch.reject(msg, false);
                     }, 1000);
-                    return;
-                }
-                //console.log('==+++=====+++++=====+++==');
-                //console.log('Message delivered ', info.response);
-                //console.log(this.waiting.length);
-                //console.log('==+++=====+++++=====+++==');
-                this.ch.ack(msg);
-            });
-
-            return null;
+                    console.log(err);
+                    return false;
+                });
         };
 
-        if(this.transporter.isIdle() === false) console.log('NOT IDLE');
+        if(this.transporter.isIdle() === false) {
+            console.log('Transporter cannot send!');
+            return Promise.resolve(false);
+        }
 
         while (this.transporter.isIdle() && this.waiting.length) {
-            console.log('internal queue size: ', this.waiting.length);
-            send(this.waiting.shift());
+            console.log('sending 1 of', this.waiting.length);
+            return send(this.waiting.shift());
         }
     }
     

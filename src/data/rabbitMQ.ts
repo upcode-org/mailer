@@ -6,10 +6,17 @@ const rabbitCredentials = JSON.parse(readFileSync('.config/credentials.json', 'u
 export const rabbitConnection = async (): Promise<amqplib.Connection> => {
     return amqplib.connect(`amqp://${rabbitCredentials.user}:${rabbitCredentials.password}@baboon.rmq.cloudamqp.com/${rabbitCredentials.user}?heartbeat=60`)
         .then( connection => {
-            console.log('connected to RabbitMQ server');
             return connection;
         })
         .catch(err => {
+            throw err;
+        });
+}
+
+export const rabbitChannel = async (connection: amqplib.Connection): Promise<amqplib.Channel> => {
+    return connection.createChannel()
+        .then( ch => ch )
+        .catch( err => {
             throw err;
         });
 }

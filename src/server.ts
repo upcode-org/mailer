@@ -1,9 +1,14 @@
 import { containerResolver } from "./composition-root";
-import { VerificationMailer } from './services/verification-mailer';
+import { VerificationEmailConsumer } from './services/verification-email-consumer';
 
 containerResolver()
-    .then((container) => {
-        const verificationMailer: VerificationMailer = container.get('verificationMailer');
-        verificationMailer.init();
+    .then( async (container) => {
+        
+        const verificationEmailConsumer: VerificationEmailConsumer = container.get('verificationEmailConsumer');
+
+        await verificationEmailConsumer.connect();
+
+        console.log('ready to send emails...');
+        
     })
     .catch( err => console.log('unable to start server', err ));
