@@ -1,18 +1,18 @@
 # Mailer Service
 
-This web service subscribes to RabbitMQ queues, and sends emails when the queues publish a message.
+1. Message arrives from RabbitMQ, it includes message id and message payload.
 
-----------
+2. Email template is retrieved based on message id.
 
-You will need: node.js, nodemon & typescript installed in your machine.
+3. Email template is populated with values found in message payload to form an outbound message.
 
-## DEV ENVIRONMENT
+4. Outbound message is added to internal queue.
 
-1. To run the service first install the project dependencies by typing "npm install" or "yarn".
+5. When email transport is idle, it will flush out internal queue by sending emails.
 
-2. You will then have to compile the typescript code in the "src" folder. Do this by typing "npm run compile". The compiled javascript will be place in the "dist" folder and the typescript compiler will watch for changes.
+6. When email is sent or an error prevents it from being sent, it gets removed from RabbitMQ queue.
 
-3. Finally you can type "npm run server" in a separate terminal tab. This will start the consumers by connecting to RabbitMQ. A consumer will listen for messages, and will send an email once it receives a message.
+
 
 
 
