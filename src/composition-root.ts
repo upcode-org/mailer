@@ -1,20 +1,31 @@
-import { AppContainer } from '../lib/container';
+//       ___           ___                                     ___           ___     
+//      /__/\         /  /\        ___                        /  /\         /  /\    
+//     |  |::\       /  /::\      /  /\                      /  /:/_       /  /::\   
+//     |  |:|:\     /  /:/\:\    /  /:/      ___     ___    /  /:/ /\     /  /:/\:\  
+//   __|__|:|\:\   /  /:/~/::\  /__/::\     /__/\   /  /\  /  /:/ /:/_   /  /:/~/:/  
+//  /__/::::| \:\ /__/:/ /:/\:\ \__\/\:\__  \  \:\ /  /:/ /__/:/ /:/ /\ /__/:/ /:/___
+//  \  \:\~~\__\/ \  \:\/:/__\/    \  \:\/\  \  \:\  /:/  \  \:\/:/ /:/ \  \:\/:::::/
+//   \  \:\        \  \::/          \__\::/   \  \:\/:/    \  \::/ /:/   \  \::/~~~~ 
+//    \  \:\        \  \:\          /__/:/     \  \::/      \  \:\/:/     \  \:\     
+//     \  \:\        \  \:\         \__\/       \__\/        \  \::/       \  \:\    
+//      \__\/         \__\/                                   \__\/         \__\/    
+
+import { AppContainer } from './lib/container';
 export const container = new AppContainer();
 
 //*******************************************************************/
-//Data dependecies 
-import { mongoConnection } from './data/database';
+//Connection dependecies 
+import { mongoConnection } from './connections/database';
 //*******************************************************************/
 
 //*******************************************************************/
 //Monitoring dependecy 
 import { MonitoringService } from './services/monitoring-service';
-import { ArchivingService } from './services/archiving-service';
 //*******************************************************************/
 
 //*******************************************************************/
 //Application Dependencies 
-import { VerificationEmailConsumer } from './services/verification-email-consumer';
+import { EmailConsumer } from './services/email-consumer/email-consumer';
 import { transporter } from './services/transporter';
 //*******************************************************************/
 
@@ -24,9 +35,8 @@ export const containerResolver = async (): Promise<AppContainer> => {
         const mailerDb = await mongoConnection();
         container.singleton('mailerDb', mailerDb );
         container.singleton('transporter', transporter);
-        container.singleton('verificationEmailConsumer', VerificationEmailConsumer, ['mailerDb', 'archivingService', 'transporter']);
-        container.singleton('monitoringService', MonitoringService);
-        container.singleton('archivingService', ArchivingService , ['mailerDb']);
+        container.singleton('emailConsumer', EmailConsumer, ['mailerDb', 'transporter']);
+        container.singleton('monitoringService', MonitoringService); // TO DO... copy from aip
         return container;
 
     } catch(err) {

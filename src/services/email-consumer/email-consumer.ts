@@ -1,30 +1,31 @@
-import { ArchivingService } from './archiving-service';
-import { IVerificationEmailConsumer, UserVerificationPayload } from './service-contracts/verification-email-consumer-contracts';
-import { Db } from 'mongodb';
-import { UnableToSendMail } from './service-contracts/error-definitions';
+import { Db, Collection } from 'mongodb';
 import { MailOptions } from 'nodemailer/lib/stream-transport';
 import { Transporter } from 'nodemailer';
 import { Connection, Channel, Message } from 'amqplib';
-import { rabbitConnection, rabbitChannel } from '../data/rabbitMQ';
+import { rabbitConnection, rabbitChannel } from '../../connections/rabbitMQ';
+import { IEmailConsumer, UserVerificationPayload } from './email-consumer-contracts';
 
-export class VerificationEmailConsumer implements IVerificationEmailConsumer {
+export class EmailConsumer implements IEmailConsumer {
 
-    q = 'verification-emails';
-    identityProviderHost = 'localhost:3088'; // dev vs prod
+    q = 'emails-to-send';
+    identityProviderHost = 'https://aip.upcode-api.co'; // dev vs prod
     
     ch: Channel;
     connection: Connection;
     waiting: Array<Message> = [];
     transporter: Transporter;
     mailerDb: Db;
-    archivingService: ArchivingService;
+    templatesCollection: Collection;
 
-    constructor(mailerDb, archivingService, transporter) {
+    constructor(mailerDb: Db, transporter) {
         this.mailerDb = mailerDb;
-        this.archivingService = archivingService;
+        this.templatesCollection = mailerDb.collection('templates');
         this.transporter = transporter;
 
-        this.transporter.on('idle', this.flushWaitingMessagesCaller.bind(this));
+        this.transporter.on('idle', () => {
+            console.log('transporter can now send');
+            this.flushWaitingMessages();
+        });
     }
 
     async connect(): Promise<void> {
@@ -52,17 +53,13 @@ export class VerificationEmailConsumer implements IVerificationEmailConsumer {
         }
     }
 
-    onMessage(msg: Message): Promise<boolean|string> {
+    async onMessage(msg: Message): Promise<boolean|string> {
         console.log('GOT A MESSAGE FROM RMQ');
         if (msg !== null) {
-            this.waiting.push(msg);
+            const outbound = await this.createOutboundMsg(msg);
+            if(outbound) this.waiting.push(msg);
             return this.flushWaitingMessages();
         }
-    }
-
-    flushWaitingMessagesCaller(): void {
-        console.log('Transporter can send!');
-        this.flushWaitingMessages();
     }
 
     flushWaitingMessages(): Promise<boolean|string> {
@@ -115,34 +112,57 @@ export class VerificationEmailConsumer implements IVerificationEmailConsumer {
             return send(this.waiting.shift());
         }
     }
-    
-    sendUserVerification(userVerificationPayload: UserVerificationPayload): Promise<boolean> {
-  
-        var mailOptions: MailOptions = {
-        from: 'no-reply@upcode.co',
-        to: userVerificationPayload.email,
-        subject: 'Verify your upcode account',
-        html: `
-            <h1>HELLO ${userVerificationPayload.firstName}</h1>
-            <p>Click <a href="http://${this.identityProviderHost}/v1.0/verify?id=${userVerificationPayload.userId}">here</a> to verify your account.</p>
-        `
-        };
 
-        return this.transporter.sendMail(mailOptions)
-        .then( info => {
-            if(info.accepted[0]) {
-                this.archiveEvent(info.accepted[0], 'sentVerificationEmail');
-                return true;
-            }
-        })
-        .catch( err => {
-            throw new UnableToSendMail(err.message);
-        });
+    async createOutboundMsg(msg): Promise<MailOptions> {
+        
+        const jsonMsg = JSON.parse(msg.content.toString());
+        const msgTypeId = jsonMsg.msgTypeId;
+
+        //1. retrieve template from DB based on msgTypeId
+        //2. populate message using jsonMsg.payload
+        //3. msg structire should be { msgTypeId: 1, payload: {...} }
+        
+        const template = await this.templatesCollection.findOne({msgTypeId});
+        let PayloadConstructor;
+
+        switch (msgTypeId) {
+            case '1':
+                PayloadConstructor = UserVerificationPayload;
+                break;
+            case '2':
+                PayloadConstructor = 'WelcomeMessagePayload';
+                break;
+        }
+
+        try {
+            var payload = new PayloadConstructor(msg);
+        } catch(err) {
+            console.log('rejected malformed msg');
+            if (this.ch) this.ch.reject(msg, false);
+            return null;
+        }
+        
+        const generatedHtml = this.generateHtml(template, payload);
+
+        const outbound: MailOptions = {
+            from: 'admin@upcode.co',
+            replyTo: 'mailer@upcode.co',
+            to: payload.email,
+            subject: 'Verify your upcode account',
+            html: generatedHtml
+        };
+        return outbound;
     }
 
-    private archiveEvent(eventPayload: string, eventName: string): void {
-        let event = { eventPayload, eventName };
-        this.archivingService.archiveEvent(event);
+    generateHtml(template, payload): string {
+        function convertVars(msg){
+            var regex = /({{\w+}})/g;  //select all words that are in {{ ... }}
+            var result = msg.replace(regex, function(match) { 
+                return t.payload[match.substring(2, match.length - 2)] ;
+            }); 
+            return result;
+        }
+        return 'html'
     }
 
 }

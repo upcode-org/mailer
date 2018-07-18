@@ -5,9 +5,10 @@
   "main": "dist/server.js",
   "scripts": {
     "start": "npm run server",
-    "server": "nodemon dist/src/server.js",
+    "server": "node compiled/src/server.js",
+    "server:local": "nodemon compiled/src/server.js",
     "compile": "tsc -w",
-    "test": "mocha -r ts-node/register --exit 'src/**/*.spec.ts'"
+    "test": "TEST=true mocha -r ts-node/register --exit 'src/**/*.spec.ts'"
   },
   "repository": {
     "type": "git",
@@ -16,9 +17,11 @@
   "author": "Sebastian Vega",
   "license": "ISC",
   "dependencies": {
+    "@types/winston": "^2.3.9",
     "amqplib": "^0.5.2",
     "mongodb": "^3.0.2",
-    "nodemailer": "^4.6.7"
+    "nodemailer": "^4.6.7",
+    "winston": "^3.0.0"
   },
   "devDependencies": {
     "@types/amqplib": "^0.5.7",

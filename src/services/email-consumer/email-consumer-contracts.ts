@@ -1,7 +1,10 @@
 import { Message } from "amqplib";
 
-export interface IVerificationEmailConsumer {
-    sendUserVerification(userVerificationPayload: UserVerificationPayload): Promise<boolean>;
+export interface IEmailConsumer {
+    connect(): Promise<void>;
+    init(): void;
+    onMessage(msg: Message): Promise<boolean|string>;
+    flushWaitingMessages(): Promise<boolean|string>;
 }
 
 export class UserVerificationPayload {
@@ -20,3 +23,5 @@ export class UserVerificationPayload {
         this.lastName = jsonMsg.lastName || null;
     }
 }
+
+// List other email payload types here.... eg: Booking success email...
