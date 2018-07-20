@@ -3,16 +3,14 @@ import { MailOptions } from 'nodemailer/lib/stream-transport';
 import { Transporter } from 'nodemailer';
 import { Connection, Channel, Message } from 'amqplib';
 import { rabbitConnection, rabbitChannel } from '../../connections/rabbitMQ';
-import { IEmailConsumer, UserVerificationPayload } from './email-consumer-contracts';
+import { IEmailConsumer, OutboundMsg } from './email-consumer-contracts';
 
 export class EmailConsumer implements IEmailConsumer {
 
     q = 'emails-to-send';
-    identityProviderHost = 'https://aip.upcode-api.co'; // dev vs prod
-    
     ch: Channel;
     connection: Connection;
-    waiting: Array<Message> = [];
+    waiting: Array<OutboundMsg> = [];
     transporter: Transporter;
     mailerDb: Db;
     templatesCollection: Collection;
@@ -56,46 +54,26 @@ export class EmailConsumer implements IEmailConsumer {
     async onMessage(msg: Message): Promise<boolean|string> {
         console.log('GOT A MESSAGE FROM RMQ');
         if (msg !== null) {
-            const outbound = await this.createOutboundMsg(msg);
-            if(outbound) this.waiting.push(msg);
+            const outboundMsg = await this.createOutboundMsg(msg);
+            if(outboundMsg) this.waiting.push(outboundMsg);
             return this.flushWaitingMessages();
         }
     }
 
     flushWaitingMessages(): Promise<boolean|string> {
 
-        const send = (msg: Message): Promise<boolean|string> => {
-            let userVerificationPayload;
+        const send = (outboundMsg: OutboundMsg): Promise<boolean|string> => {
 
-            try {
-                userVerificationPayload = new UserVerificationPayload(msg);
-            } catch(err) {
-                console.log('rejected malformed msg');
-                if (this.ch) this.ch.reject(msg, false);
-                return Promise.resolve(false);
-            }
-
-            var mailOptions: MailOptions = {
-                from: 'admin@upcode.co',
-                replyTo: 'mailer@upcode.co',
-                to: userVerificationPayload.email,
-                subject: 'Verify your upcode account',
-                html: `
-                    <h1>HELLO ${userVerificationPayload.firstName}</h1>
-                    <p>Click <a href="http://${this.identityProviderHost}/v1.0/verify?id=${userVerificationPayload.userId}">here</a> to verify your account.</p>
-                `
-            };
-
-            return this.transporter.sendMail(mailOptions)
+            return this.transporter.sendMail(outboundMsg.outboundMsg)
                 .then( info => {
                     console.log('==+++=====+SENT+=====+++==', info.response );
-                    if(this.ch) this.ch.ack(msg);
+                    if(this.ch) this.ch.ack(outboundMsg.msg);
                     return info.response;
                 })
                 .catch( err => {
                     setTimeout(() => {
                         console.log('could not send message, rejected to avoid infinite loop', err);
-                        if(this.ch) this.ch.reject(msg, false);
+                        if(this.ch) this.ch.reject(outboundMsg.msg, false);
                     }, 1000);
                     console.log(err);
                     return false;
@@ -113,56 +91,41 @@ export class EmailConsumer implements IEmailConsumer {
         }
     }
 
-    async createOutboundMsg(msg): Promise<MailOptions> {
+    async createOutboundMsg(msg): Promise<OutboundMsg> {
         
         const jsonMsg = JSON.parse(msg.content.toString());
         const msgTypeId = jsonMsg.msgTypeId;
 
-        //1. retrieve template from DB based on msgTypeId
-        //2. populate message using jsonMsg.payload
-        //3. msg structire should be { msgTypeId: 1, payload: {...} }
-        
-        const template = await this.templatesCollection.findOne({msgTypeId});
-        let PayloadConstructor;
-
-        switch (msgTypeId) {
-            case '1':
-                PayloadConstructor = UserVerificationPayload;
-                break;
-            case '2':
-                PayloadConstructor = 'WelcomeMessagePayload';
-                break;
-        }
-
         try {
-            var payload = new PayloadConstructor(msg);
-        } catch(err) {
-            console.log('rejected malformed msg');
-            if (this.ch) this.ch.reject(msg, false);
+            var templateDoc = await this.templatesCollection.findOne({msgTypeId});
+        } catch(err){
+            // report err
             return null;
         }
-        
-        const generatedHtml = this.generateHtml(template, payload);
 
+        const generatedHtml = this.generateHtml(templateDoc.html, jsonMsg.payload);
+        console.log(jsonMsg.recipientEmail);
         const outbound: MailOptions = {
             from: 'admin@upcode.co',
             replyTo: 'mailer@upcode.co',
-            to: payload.email,
-            subject: 'Verify your upcode account',
+            to: jsonMsg.recipientEmail,
+            subject: templateDoc.subject,
             html: generatedHtml
         };
-        return outbound;
+
+        return {
+            msg: msg,
+            outboundMsg: outbound
+        };
     }
 
     generateHtml(template, payload): string {
-        function convertVars(msg){
-            var regex = /({{\w+}})/g;  //select all words that are in {{ ... }}
-            var result = msg.replace(regex, function(match) { 
-                return t.payload[match.substring(2, match.length - 2)] ;
-            }); 
-            return result;
-        }
-        return 'html'
+        var regex = /({{\w+}})/g;  //select all words that are in {{ ... }}
+        var result = template.replace(regex, function(match) { 
+            return payload[match.substring(2, match.length - 2)] ;
+        }); 
+        console.log(result)
+        return result;
     }
 
 }

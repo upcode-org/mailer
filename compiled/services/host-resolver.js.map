@@ -1,0 +1,1 @@
+{"version":3,"file":"host-resolver.js","sourceRoot":"","sources":["../../src/services/host-resolver.ts"],"names":[],"mappings":";;AAAa,QAAA,+BAA+B,GAAG,CAAC,WAAW,EAAE,EAAE;IAC3D,QAAQ,WAAW,EAAE;QACjB,KAAK,OAAO;YACR,OAAO,uBAAuB,CAAC;QACnC,KAAK,KAAK;YACN,OAAO,+BAA+B,CAAC;QAC3C,KAAK,OAAO;YACR,OAAO,iCAAiC,CAAC;QAC7C,KAAK,MAAM;YACP,OAAO,2BAA2B,CAAC;KAC1C;AACL,CAAC,CAAA"}

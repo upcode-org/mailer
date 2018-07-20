@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const chai_1 = require("chai");
 require("mocha");
-const composition_root_1 = require("../composition-root");
+const composition_root_1 = require("../../composition-root");
 describe('Verification Mailer Test:', function () {
     this.timeout(15000);
     let container;
@@ -18,11 +18,11 @@ describe('Verification Mailer Test:', function () {
         container = yield composition_root_1.containerResolver();
     }));
     it('should send a verification email', () => __awaiter(this, void 0, void 0, function* () {
-        const verificationEmailConsumer = container.get('verificationEmailConsumer');
+        const emailConsumer = container.get('emailConsumer');
         const msg = { content: new Buffer('{"userId":"5b29160a9373381d14bcdb74","email":"svegalopez@gmail.com","firstName":"Sebastian","lastName":"Vega"}') };
         let result;
         try {
-            result = yield verificationEmailConsumer.onMessage(msg);
+            result = yield emailConsumer.onMessage(msg);
         }
         catch (err) {
             result = err;
@@ -35,8 +35,8 @@ describe('Verification Mailer Test:', function () {
         });
     }));
     after(() => {
-        const verificationEmailConsumer = container.get('verificationEmailConsumer');
-        verificationEmailConsumer.transporter.close();
+        const emailConsumer = container.get('emailConsumer');
+        emailConsumer.transporter.close();
     });
 });
-//# sourceMappingURL=verification-email-consumer.spec.js.map
+//# sourceMappingURL=email-consumer.spec.js.map

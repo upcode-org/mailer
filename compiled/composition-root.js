@@ -19,11 +19,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const container_1 = require("../lib/container");
+const container_1 = require("./lib/container");
 exports.container = new container_1.AppContainer();
 //*******************************************************************/
-//Data dependecies 
-const database_1 = require("./data/database");
+//Connection dependecies 
+const database_1 = require("./connections/database");
 //*******************************************************************/
 //*******************************************************************/
 //Monitoring dependecy 
@@ -31,7 +31,7 @@ const monitoring_service_1 = require("./services/monitoring-service");
 //*******************************************************************/
 //*******************************************************************/
 //Application Dependencies 
-const verification_email_consumer_1 = require("./services/verification-email-consumer");
+const email_consumer_1 = require("./services/email-consumer/email-consumer");
 const transporter_1 = require("./services/transporter");
 //*******************************************************************/
 exports.containerResolver = () => __awaiter(this, void 0, void 0, function* () {
@@ -39,7 +39,7 @@ exports.containerResolver = () => __awaiter(this, void 0, void 0, function* () {
         const mailerDb = yield database_1.mongoConnection();
         exports.container.singleton('mailerDb', mailerDb);
         exports.container.singleton('transporter', transporter_1.transporter);
-        exports.container.singleton('verificationEmailConsumer', verification_email_consumer_1.VerificationEmailConsumer, ['mailerDb', 'transporter']);
+        exports.container.singleton('emailConsumer', email_consumer_1.EmailConsumer, ['mailerDb', 'transporter']);
         exports.container.singleton('monitoringService', monitoring_service_1.MonitoringService); // TO DO... copy from aip
         return exports.container;
     }

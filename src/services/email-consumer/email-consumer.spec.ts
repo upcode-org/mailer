@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import 'mocha';
-import { containerResolver } from '../composition-root';
+import { containerResolver } from '../../composition-root';
 import { EmailConsumer } from './email-consumer';
 
 describe('Verification Mailer Test:', function() {

@@ -5,8 +5,8 @@
   "main": "dist/server.js",
   "scripts": {
     "start": "npm run server",
-    "server": "node compiled/src/server.js",
-    "server:local": "nodemon compiled/src/server.js",
+    "server": "ENV='PROD' node compiled/server.js",
+    "server:local": "ENV='LOCAL' nodemon compiled/server.js",
     "compile": "tsc -w",
     "test": "TEST=true mocha -r ts-node/register --exit 'src/**/*.spec.ts'"
   },
