@@ -24,10 +24,12 @@ exports.container = new container_1.AppContainer();
 //*******************************************************************/
 //Connection dependecies 
 const database_1 = require("./connections/database");
+const rabbitMQ_1 = require("./connections/rabbitMQ");
 //*******************************************************************/
 //*******************************************************************/
 //Monitoring dependecy 
 const monitoring_service_1 = require("./services/monitoring-service");
+const logger_1 = require("./services/logger");
 //*******************************************************************/
 //*******************************************************************/
 //Application Dependencies 
@@ -37,10 +39,16 @@ const transporter_1 = require("./services/transporter");
 exports.containerResolver = () => __awaiter(this, void 0, void 0, function* () {
     try {
         const mailerDb = yield database_1.mongoConnection();
+        const rmqConnection = yield rabbitMQ_1.rabbitConnection();
+        const emailConsumerCh = yield rabbitMQ_1.rabbitChannel(rmqConnection);
+        const monServCh = yield rabbitMQ_1.rabbitChannel(rmqConnection);
         exports.container.singleton('mailerDb', mailerDb);
+        exports.container.singleton('emailConsumerCh', emailConsumerCh);
+        exports.container.singleton('monServCh', monServCh);
         exports.container.singleton('transporter', transporter_1.transporter);
-        exports.container.singleton('emailConsumer', email_consumer_1.EmailConsumer, ['mailerDb', 'transporter']);
-        exports.container.singleton('monitoringService', monitoring_service_1.MonitoringService); // TO DO... copy from aip
+        exports.container.singleton('logger', logger_1.logger);
+        exports.container.singleton('monitoringService', monitoring_service_1.MonitoringService, ['logger', 'monServCh']); // TO DO... copy from aip
+        exports.container.singleton('emailConsumer', email_consumer_1.EmailConsumer, ['mailerDb', 'transporter', 'emailConsumerCh', 'monitoringService']);
         return exports.container;
     }
     catch (err) {

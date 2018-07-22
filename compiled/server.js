@@ -11,12 +11,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const composition_root_1 = require("./composition-root");
 composition_root_1.containerResolver()
     .then((container) => __awaiter(this, void 0, void 0, function* () {
-    const emailConsumer = container.get('emailConsumer');
     const monitoringService = container.get('monitoringService');
-    yield emailConsumer.connect();
-    console.log('ready to send emails...');
+    const emailConsumer = container.get('emailConsumer');
+    yield emailConsumer.listen();
+    monitoringService.log('ready to send emails...');
     process.on('uncaughtException', (err) => {
-        monitoringService.log(`Uncaught exception: ${err}`, process.pid);
+        monitoringService.log(`Uncaught exception: ${err}`);
         process.exit(1);
     });
 }))

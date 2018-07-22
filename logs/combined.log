@@ -1,0 +1,339 @@
+{ message: '47644: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47659: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47682: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47682: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47702: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47702: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47715: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47715: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47729: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47729: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47742: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47742: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47756: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47756: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47775: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47775: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47787: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47787: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47799: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47799: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47814: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47814: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47828: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47828: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47905: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47905: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47926: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47926: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47974: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47974: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47986: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '47986: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '48025: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '48025: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '48053: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '48053: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '48053: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '48075: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '48075: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '48075: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '48325: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '48325: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '48325: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49152: added outbound message to internal email queue: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '1: sending 1 of \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49152: Sent email: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49210: added outbound message to internal email queue: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '1: sending 1 of \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49210: Sent email: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49245: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49245: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49245: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49258: email consumer connected to RabbitMQ channel \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49258: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49258: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49258: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49261: added outbound message to internal email queue: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '1: sending 1 of \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49261: Sent email: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49454: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49454: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49466: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49466: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49485: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49485: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49485: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49499: added outbound message to internal email queue: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '1: sending 1 of \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49499: Sent email: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49550: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49550: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49550: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49562: added outbound message to internal email queue: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49550: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49562: Sent email: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49612: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49612: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49612: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49626: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode firstName</h1>         <p>Please verify your account by visiting this link:</p>         <a href="null/v1.0/verify?id=5b53832b5c5cddc1dae5a5ca">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49612: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49626: Sent email: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49684: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49684: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49684: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49696: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode firstName</h1>         <p>Please verify your account by visiting this link:</p>         <a href="http://localhost:3000/v1.0/verify?id=5b5383b9ff1f6fc220be977e">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49684: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49696: Sent email: <html>     <body>         <h1>Welcome to UpCode firstName</h1>         <p>Please verify your account by visiting this link:</p>         <a href="http://localhost:3000/v1.0/verify?id=5b5383b9ff1f6fc220be977e">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49684: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '001-49765-1532200095517-349: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode sebastian</h1>         <p>Please verify your account by visiting this link:</p>         <a href="http://localhost:3000/v1.0/verify?id=5b53849fcecc69c265a5a1b3">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49684: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '001-49765-1532200095517-349: Sent email: <html>     <body>         <h1>Welcome to UpCode sebastian</h1>         <p>Please verify your account by visiting this link:</p>         <a href="http://localhost:3000/v1.0/verify?id=5b53849fcecc69c265a5a1b3">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49684: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '001-49765-1532200137100-290: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode sebastian</h1>         <p>Please verify your account by visiting this link:</p>         <a href="http://localhost:3000/v1.0/verify?id=5b5384c9cecc69c265a5a1b4">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49684: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '001-49765-1532200137100-290: Sent email: <html>     <body>         <h1>Welcome to UpCode sebastian</h1>         <p>Please verify your account by visiting this link:</p>         <a href="http://localhost:3000/v1.0/verify?id=5b5384c9cecc69c265a5a1b4">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49807: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49807: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49820: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49820: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49820: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '001-49765-1532200221667-37: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode sebastian</h1>         <p>Please verify your account by visiting this link:</p>         <a href="http://localhost:3000/v1.0/verify?id=5b53851dcecc69c265a5a1b5">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49820: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '001-49765-1532200221667-37: Sent email success \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49874: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49874: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49874: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '001-49853-1532200281571-330: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode sebastian</h1>         <p>Please verify your account by visiting this link:</p>         <a href="http://localhost:3000/v1.0/verify?id=5b53855909e95fc2bdf909ac">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '49874: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '001-49853-1532200281571-330: Sent email success \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63171: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63171: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63198: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63198: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }

@@ -8,52 +8,40 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const rabbitMQ_1 = require("../../connections/rabbitMQ");
 class EmailConsumer {
-    constructor(mailerDb, transporter) {
+    constructor(mailerDb, transporter, emailConsumerCh, monitoringService) {
         this.q = 'emails-to-send';
         this.waiting = [];
         this.mailerDb = mailerDb;
         this.templatesCollection = mailerDb.collection('templates');
         this.transporter = transporter;
+        this.ch = emailConsumerCh;
+        this.monitoringService = monitoringService;
         this.transporter.on('idle', () => {
-            console.log('transporter can now send');
+            this.monitoringService.log('Transporter is available to send');
             this.flushWaitingMessages();
         });
     }
-    connect() {
+    listen() {
         return __awaiter(this, void 0, void 0, function* () {
+            this.ch.prefetch(10);
             try {
-                this.connection = yield rabbitMQ_1.rabbitConnection();
-                this.ch = yield rabbitMQ_1.rabbitChannel(this.connection);
-                yield this.ch.checkQueue(this.q);
-                console.log('connected to RabbitMQ');
+                this.ch.consume(this.q, this.onMessage.bind(this));
+                this.monitoringService.log('consuming from ' + this.q + ' queue');
             }
             catch (err) {
-                console.log('could not connect to RabbitMQ');
-                throw err;
+                this.monitoringService.log(`Email consumer error: ${err}`);
             }
-            this.connection.on('close', this.connect.bind(this));
-            this.init();
         });
-    }
-    init() {
-        this.ch.prefetch(10);
-        try {
-            this.ch.consume(this.q, this.onMessage.bind(this));
-            console.log('consuming from ' + this.q + ' queue');
-        }
-        catch (err) {
-            console.log('consumer error: ', err);
-        }
     }
     onMessage(msg) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('GOT A MESSAGE FROM RMQ');
+            this.monitoringService.log('Received msg from RMQ');
             if (msg !== null) {
                 const outboundMsg = yield this.createOutboundMsg(msg);
                 if (outboundMsg)
                     this.waiting.push(outboundMsg);
+                this.monitoringService.log(`added outbound message to internal email queue: ${outboundMsg.outboundMsg.html}`, outboundMsg.processInstanceId);
                 return this.flushWaitingMessages();
             }
         });
@@ -62,27 +50,26 @@ class EmailConsumer {
         const send = (outboundMsg) => {
             return this.transporter.sendMail(outboundMsg.outboundMsg)
                 .then(info => {
-                console.log('==+++=====+SENT+=====+++==', info.response);
                 if (this.ch)
                     this.ch.ack(outboundMsg.msg);
+                this.monitoringService.log(`Sent email success`, outboundMsg.processInstanceId);
                 return info.response;
             })
                 .catch(err => {
                 setTimeout(() => {
-                    console.log('could not send message, rejected to avoid infinite loop', err);
                     if (this.ch)
                         this.ch.reject(outboundMsg.msg, false);
+                    this.monitoringService.log(`Rejected email with error: ${err}`, outboundMsg.processInstanceId);
                 }, 1000);
-                console.log(err);
                 return false;
             });
         };
         if (this.transporter.isIdle() === false) {
-            console.log('Transporter cannot send!');
+            this.monitoringService.log('Transporter cannot send!');
             return Promise.resolve(false);
         }
         while (this.transporter.isIdle() && this.waiting.length) {
-            console.log('sending 1 of', this.waiting.length);
+            this.monitoringService.log(`sending 1 of ${this.waiting.length}`);
             return send(this.waiting.shift());
         }
     }
@@ -98,7 +85,6 @@ class EmailConsumer {
                 return null;
             }
             const generatedHtml = this.generateHtml(templateDoc.html, jsonMsg.payload);
-            console.log(jsonMsg.recipientEmail);
             const outbound = {
                 from: 'admin@upcode.co',
                 replyTo: 'mailer@upcode.co',
@@ -108,6 +94,7 @@ class EmailConsumer {
             };
             return {
                 msg: msg,
+                processInstanceId: jsonMsg.processInstanceId,
                 outboundMsg: outbound
             };
         });
@@ -117,7 +104,6 @@ class EmailConsumer {
         var result = template.replace(regex, function (match) {
             return payload[match.substring(2, match.length - 2)];
         });
-        console.log(result);
         return result;
     }
 }
