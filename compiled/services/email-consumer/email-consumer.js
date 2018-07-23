@@ -48,18 +48,19 @@ class EmailConsumer {
     }
     flushWaitingMessages() {
         const send = (outboundMsg) => {
+            this.monitoringService.log(JSON.stringify(outboundMsg.outboundMsg));
             return this.transporter.sendMail(outboundMsg.outboundMsg)
                 .then(info => {
-                if (this.ch)
+                if (!process.env.TEST)
                     this.ch.ack(outboundMsg.msg);
                 this.monitoringService.log(`Sent email success`, outboundMsg.processInstanceId);
                 return info.response;
             })
                 .catch(err => {
+                this.monitoringService.log(`Rejected email with error: ${err}`, outboundMsg.processInstanceId);
                 setTimeout(() => {
-                    if (this.ch)
+                    if (!process.env.TEST)
                         this.ch.reject(outboundMsg.msg, false);
-                    this.monitoringService.log(`Rejected email with error: ${err}`, outboundMsg.processInstanceId);
                 }, 1000);
                 return false;
             });

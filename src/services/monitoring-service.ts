@@ -12,8 +12,9 @@ export class MonitoringService {
     }
 
     log(msg, processInstanceId?) {
-        if(process.env.TEST) return;
         if(!processInstanceId) processInstanceId = process.pid;
+        if(process.env.TEST) return this.logger.info(`${processInstanceId}: ${msg} \n`);
+
 
         const queueName = this.getQueueName(processInstanceId);
         this.report(`${processInstanceId}: ${msg}`, queueName );

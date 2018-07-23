@@ -12,14 +12,25 @@ const chai_1 = require("chai");
 require("mocha");
 const composition_root_1 = require("../../composition-root");
 describe('Verification Mailer Test:', function () {
-    this.timeout(15000);
+    this.timeout(20000);
     let container;
     before(() => __awaiter(this, void 0, void 0, function* () {
         container = yield composition_root_1.containerResolver();
     }));
     it('should send a verification email', () => __awaiter(this, void 0, void 0, function* () {
         const emailConsumer = container.get('emailConsumer');
-        const msg = { content: new Buffer('{"userId":"5b29160a9373381d14bcdb74","email":"svegalopez@gmail.com","firstName":"Sebastian","lastName":"Vega"}') };
+        const emailMsg = {
+            msgTypeId: 1,
+            recipientEmail: 'svegalopez@gmail.com',
+            processInstanceId: (process.pid).toString(),
+            payload: {
+                "APP_IDENTITY_PROVIDER_HOST": 'test-host',
+                "FIRST_NAME": 'Test Name',
+                "LAST_NAME": 'Test Surname',
+                "USER_ID": '123456',
+            }
+        };
+        const msg = { content: new Buffer(JSON.stringify(emailMsg)) };
         let result;
         try {
             result = yield emailConsumer.onMessage(msg);
@@ -28,7 +39,7 @@ describe('Verification Mailer Test:', function () {
             result = err;
         }
         chai_1.expect(result).to.satisfy((result) => {
-            console.log('RESULT: ', result.substring(0, 3));
+            console.log('RESULT: ', result);
             if (result && result.substring(0, 3) === '250')
                 return true;
             return false;

@@ -337,3 +337,177 @@
 { message: '63198: ready to send emails... \n',
   level: 'info',
   [Symbol(level)]: 'info' }
+{ message: '63371: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63371: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63422: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63422: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63435: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63435: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63495: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63495: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: 'undefined: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63551: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63551: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: 'undefined: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63604: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63604: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: 'undefined: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63615: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode Test Name</h1>         <p>Please verify your account by visiting this link:</p>         <a href="test-host/v1.0/verify?id=123456">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: 'undefined: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63654: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63654: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63657: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63657: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode Test Name</h1>         <p>Please verify your account by visiting this link:</p>         <a href="test-host/v1.0/verify?id=123456">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63657: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63704: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63704: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63708: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63708: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode Test Name</h1>         <p>Please verify your account by visiting this link:</p>         <a href="test-host/v1.0/verify?id=123456">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63708: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63748: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63748: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63753: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63753: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode Test Name</h1>         <p>Please verify your account by visiting this link:</p>         <a href="test-host/v1.0/verify?id=123456">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63753: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63753: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63791: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63791: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63795: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63795: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode Test Name</h1>         <p>Please verify your account by visiting this link:</p>         <a href="test-host/v1.0/verify?id=123456">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63795: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63795: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63816: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63816: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode Test Name</h1>         <p>Please verify your account by visiting this link:</p>         <a href="test-host/v1.0/verify?id=123456">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63816: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63816: [object Object] \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63816: Rejected email with error: TypeError: Cannot read property \'deliveryTag\' of undefined \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63856: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63856: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63868: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63868: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode Test Name</h1>         <p>Please verify your account by visiting this link:</p>         <a href="test-host/v1.0/verify?id=123456">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63868: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63868: {"from":"admin@upcode.co","replyTo":"mailer@upcode.co","to":"svegalopez@gmail.com","subject":"Verify your UpCode account","html":"<html>     <body>         <h1>Welcome to UpCode Test Name</h1>         <p>Please verify your account by visiting this link:</p>         <a href=\\"test-host/v1.0/verify?id=123456\\">Verify my account</a>     </body> </html>"} \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63868: Rejected email with error: TypeError: Cannot read property \'deliveryTag\' of undefined \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63931: consuming from emails-to-send queue \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63931: ready to send emails... \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63944: Received msg from RMQ \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63944: added outbound message to internal email queue: <html>     <body>         <h1>Welcome to UpCode Test Name</h1>         <p>Please verify your account by visiting this link:</p>         <a href="test-host/v1.0/verify?id=123456">Verify my account</a>     </body> </html> \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63944: sending 1 of 1 \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63944: {"from":"admin@upcode.co","replyTo":"mailer@upcode.co","to":"svegalopez@gmail.com","subject":"Verify your UpCode account","html":"<html>     <body>         <h1>Welcome to UpCode Test Name</h1>         <p>Please verify your account by visiting this link:</p>         <a href=\\"test-host/v1.0/verify?id=123456\\">Verify my account</a>     </body> </html>"} \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
+{ message: '63944: Sent email success \n',
+  level: 'info',
+  [Symbol(level)]: 'info' }
